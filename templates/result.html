@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>    
+    header {
+        background-color: rgb(42, 39, 39);
+        color: #333;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        max-height: 50px;
+    }
+
+    .website-name {
+        margin-left: -725px; /* Adjust the margin as needed */
+        color: #ffcc00; /* Set the text color */
+    }
+
+
+    .navigation {
+        list-style-type: none;
+        display: flex;
+        gap: 30px;
+        background-color: rgb(42, 39, 39);
+        padding: 10px;
+        border-radius: 5px;
+        align-items: center; /* Center vertically */
+    }
+
+    .navigation li {
+        position: relative;
+        margin-right: 30px; /* Adjusted margin */
+    }
+
+    .navigation li:last-child {
+        margin-right: 0; /* Remove margin for the last item */
+    }
+
+    .navigation li a {
+        text-decoration: none;
+        color: rgb(46, 204, 113); /* Change the text color of navigation contents */
+        font-weight: bold;
+        transition: color 0.3s;
+    }
+
+    .navigation li:not(:last-child):after {
+        content: '|';
+        position: absolute;
+        top: 50%;
+        right: -30px; /* Adjusted position */
+        transform: translateY(-50%);
+        color: rgb(46, 204, 113);
+    }
+
+    .navigation li a:hover {
+        color: #ffcc00;
+    }
+
+    /* Keyframes for the loading animation */
+
+    @keyframes spin3D {
+        from {
+            transform: rotate3d(.5, .5, .5, 360deg);
+        }
+
+        to {
+            transform: rotate3d(0deg);
+        }
+    }
+
+    /* Styling for the loading animation */
+
+    .spinner-box {
+        width: 100px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent;
+    }
+
+    .leo {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+
+    .blue-orbit {
+        width: 50px;
+        height: 50px;
+        border: 2px solid #91daffa5;
+        -webkit-animation: spin3D 3s linear .2s infinite;
+    }
+
+    .green-orbit {
+        width: 36px;
+        height: 36px;
+        border: 2px solid #91ffbfa5;
+        -webkit-animation: spin3D 2s linear 0s infinite;
+    }
+
+    .red-orbit {
+        width: 26px;
+        height: 26px;
+        border: 2px solid #f5a959a5;
+        -webkit-animation: spin3D 1s linear 0s infinite;
+    }
+
+    .white-orbit {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #d648d6a5;
+        -webkit-animation: spin3D 10s linear 0s infinite;
+    }
+
+    .w1 {
+        transform: rotate3D(1, 1, 1, 90deg);
+    }
+
+    .w2 {
+        transform: rotate3D(1, 2, .5, 90deg);
+    }
+
+    .w3 {
+        transform: rotate3D(.5, 1, 2, 90deg);
+    }
+</style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <!-- Dynamically generated logo using loading animation -->
+        <div class="spinner-box">
+            <div class="blue-orbit leo"></div>
+            <div class="green-orbit leo"></div>
+            <div class="red-orbit leo"></div>
+            <div class="white-orbit w1 leo"></div>
+            <div class="white-orbit w2 leo"></div>
+            <div class="white-orbit w3 leo"></div>
+        </div>
+    </div>
+    <div class="website-name">
+        <h2 style="color: #ffcc00;">ChatEdGe</h2> <!-- Change color to #ffcc00 -->
+    </div>
+    <div>
+        <ul class="navigation">
+            <li><a href="#">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/profile">Profile</a></li>
+            <li><a href="/settings">Settings</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</header>
+    <div class="container">
+        <h1>Result</h1>
+        <p>Number of Registered Semesters: {{ num_semesters }}</p>
+        <p>CGPA: {{ cgpa }}</p>
+        <p>Percentage Equivalence: {{ percentage_equivalence }}%</p>
+
+        <h2>Semester-wise SGPA:</h2>
+        {% for i in range(num_semesters) %}
+            {% set sgpa = semester_sgpa[i] %}
+            {% set semester = i + 1 %}
+            <p>Semester {{ semester }} SGPA: {{ sgpa }}</p>
+        {% endfor %}
+    </div>
+</body>
+</html>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Calculator</title>
+    <style>
+        body {
+            background-color: #111; /* Light black background for the body */
+            font-family: Arial, sans-serif; /* Specify a font */
+            color: #fff; /* Text color */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto; /* Adjusted margin to center the container */
+            padding: 20px;
+            background-color: #222; /* Darker background color */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a slight shadow */
+        }
+
+        .semester-block {
+            margin-bottom: 20px;
+            position: relative; /* Make position relative for positioning delete button */
+            padding-right: 25px; /* Adjust padding for delete button */
+        }
+
+        .semester-block h2 {
+            margin-bottom: 10px;
+        }
+
+        .semester-block button.delete-semester {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: transparent;
+            color: #f00;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .subject-container {
+            margin-bottom: 10px;
+            position: relative; /* Make position relative for positioning delete button */
+            display: inline-block; /* Display subjects side by side */
+            vertical-align: top; /* Align subjects to the top */
+            margin-right: 10px; /* Add some space between subjects */
+        }
+
+        .subject-container:last-child {
+            margin-right: 0; /* Remove margin from the last subject to prevent extra space */
+        }
+
+        .subject-container button.delete-subject {
+            background-color: transparent;
+            color: #f00;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            vertical-align: top; /* Align the delete button to the top */
+            margin-left: 5px; /* Add some space between delete button and subject */
+        }
+
+        input[type="text"] {
+            width: calc(100% - 25px); /* Adjust width for delete button */
+            margin-bottom: 5px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button.add-subject-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button.add-subject-button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .completed-button {
+            margin-top: 10px;
+            text-align: right; /* Align the button to the right */
+        }
+
+        .completed-button button {
+            background-color: #333;
+        }
+        
+        header {
+            background-color: rgb(42, 39, 39);
+            color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            max-height: 50px;
+        }
+
+        .website-name {
+            margin-left: -725px; /* Adjust the margin as needed */
+            color: #ffcc00; /* Set the text color */
+        }
+
+
+        .navigation {
+            list-style-type: none;
+            display: flex;
+            gap: 30px;
+            background-color: rgb(42, 39, 39);
+            padding: 10px;
+            border-radius: 5px;
+            align-items: center; /* Center vertically */
+        }
+
+        .navigation li {
+            position: relative;
+            margin-right: 30px; /* Adjusted margin */
+        }
+
+        .navigation li:last-child {
+            margin-right: 0; /* Remove margin for the last item */
+        }
+
+        .navigation li a {
+            text-decoration: none;
+            color: rgb(46, 204, 113); /* Change the text color of navigation contents */
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navigation li:not(:last-child):after {
+            content: '|';
+            position: absolute;
+            top: 50%;
+            right: -30px; /* Adjusted position */
+            transform: translateY(-50%);
+            color: rgb(46, 204, 113);
+        }
+
+        .navigation li a:hover {
+            color: #ffcc00;
+        }
+
+        /* Keyframes for the loading animation */
+
+        @keyframes spin3D {
+            from {
+                transform: rotate3d(.5, .5, .5, 360deg);
+            }
+
+            to {
+                transform: rotate3d(0deg);
+            }
+        }
+
+        /* Styling for the loading animation */
+
+        .spinner-box {
+            width: 100px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+        }
+
+        .leo {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .blue-orbit {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #91daffa5;
+            -webkit-animation: spin3D 3s linear .2s infinite;
+        }
+
+        .green-orbit {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #91ffbfa5;
+            -webkit-animation: spin3D 2s linear 0s infinite;
+        }
+
+        .red-orbit {
+            width: 26px;
+            height: 26px;
+            border: 2px solid #f5a959a5;
+            -webkit-animation: spin3D 1s linear 0s infinite;
+        }
+
+        .white-orbit {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #d648d6a5;
+            -webkit-animation: spin3D 10s linear 0s infinite;
+        }
+
+        .w1 {
+            transform: rotate3D(1, 1, 1, 90deg);
+        }
+
+        .w2 {
+            transform: rotate3D(1, 2, .5, 90deg);
+        }
+
+        .w3 {
+            transform: rotate3D(.5, 1, 2, 90deg);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <!-- Dynamically generated logo using loading animation -->
+            <div class="spinner-box">
+                <div class="blue-orbit leo"></div>
+                <div class="green-orbit leo"></div>
+                <div class="red-orbit leo"></div>
+                <div class="white-orbit w1 leo"></div>
+                <div class="white-orbit w2 leo"></div>
+                <div class="white-orbit w3 leo"></div>
+            </div>
+        </div>
+        <div class="website-name">
+            <h2 style="color: #ffcc00;">ChatEdGe</h2> <!-- Change color to #ffcc00 -->
+        </div>
+        <div>
+            <ul class="navigation">
+                <li><a href="#">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Grade Calculator</h1>
+        <form method="POST" action="/">
+            <div id="semesters-container">
+                <!-- Semesters will be added dynamically here -->
+            </div>
+            <input type="hidden" name="num_semesters" value="0" id="num-semesters-input">  <!-- Hidden input for the number of semesters -->
+            <button id="add-semester-button" type="button" onclick="addSemester()">Add Semester</button>
+            <div class="completed-button">
+                <button type="submit">Calculate</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var maxSemesters = 8;  // Maximum number of semesters allowed
+
+        function addSemester() {
+            var semestersContainer = document.getElementById('semesters-container');
+            var numSemestersInput = document.getElementById('num-semesters-input');
+
+            if (semestersContainer.children.length < maxSemesters) {
+                // Create a new div for the semester
+                var semesterDiv = document.createElement('div');
+                semesterDiv.className = 'semester-block';
+
+                // Add the semester number
+                var semesterNumber = semestersContainer.children.length + 1;
+                semesterDiv.innerHTML = '<h2>Semester ' + semesterNumber + '</h2>';
+                
+                // Create delete semester button
+                var deleteSemesterButton = document.createElement('button');
+                deleteSemesterButton.type = 'button';
+                deleteSemesterButton.className = 'delete-semester';
+                deleteSemesterButton.innerHTML = '&times;'; // Use '×' symbol
+                deleteSemesterButton.onclick = function () {
+                    semestersContainer.removeChild(semesterDiv);
+                    updateSemesterNumbers(); // Update semester numbers when a semester is deleted
+                };
+                semesterDiv.appendChild(deleteSemesterButton);
+
+                // Update the number of semesters input value
+                numSemestersInput.value = semestersContainer.children.length + 1;
+
+                // Create a div for subjects in the semester
+                var subjectsDiv = document.createElement('div');
+                subjectsDiv.className = 'subjects-container';
+                semesterDiv.appendChild(subjectsDiv);
+
+                // Create a button to add subjects
+                var addSubjectsButton = document.createElement('button');
+                addSubjectsButton.type = 'button';
+                addSubjectsButton.textContent = 'Add Subject';
+                addSubjectsButton.className = 'add-subject-button';
+                addSubjectsButton.onclick = function () {
+                    addSubject(subjectsDiv, semesterNumber);
+                };
+                semesterDiv.appendChild(addSubjectsButton);
+
+                // Append the new semester div to the container
+                semestersContainer.appendChild(semesterDiv);
+
+                // Disable the "Add Semester" button if the maximum limit is reached
+                if (semestersContainer.children.length >= maxSemesters) {
+                    document.getElementById('add-semester-button').disabled = true;
+                }
+            }
+        }
+
+        function addSubject(container, semester) {
+            var subjectDiv = document.createElement('div');
+            subjectDiv.className = 'subject-container';
+
+            var subjectNameInput = document.createElement('input');
+            subjectNameInput.type = 'text';
+            subjectNameInput.name = 'semester' + semester + '_subject_names[]';
+            subjectNameInput.placeholder = 'Subject Name';
+
+            var gradesInput = document.createElement('input');
+            gradesInput.type = 'text';
+            gradesInput.name = 'semester' + semester + '_grades[]';
+            gradesInput.placeholder = 'Grades';
+
+            var creditsInput = document.createElement('input');
+            creditsInput.type = 'text';
+            creditsInput.name = 'semester' + semester + '_credits[]';
+            creditsInput.placeholder = 'Credits';
+
+            var deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'delete-subject';
+            deleteButton.textContent = 'X';
+            deleteButton.onclick = function () {
+                container.removeChild(subjectDiv);
+            };
+
+            subjectDiv.appendChild(subjectNameInput);
+            subjectDiv.appendChild(gradesInput);
+            subjectDiv.appendChild(creditsInput);
+            subjectDiv.appendChild(deleteButton);
+
+            container.appendChild(subjectDiv);
+        }
+
+        function updateSemesterNumbers() {
+            var semestersContainer = document.getElementById('semesters-container');
+            var semesterBlocks = semestersContainer.getElementsByClassName('semester-block');
+
+            for (var i = 0; i < semesterBlocks.length; i++) {
+                semesterBlocks[i].getElementsByTagName('h2')[0].textContent = 'Semester ' + (i + 1);
+            }
+        }
+    </script>
+</body>
+</html>

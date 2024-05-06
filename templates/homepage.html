@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOMEPAGE</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: rgb(42, 39, 39);
+            color: #333;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            max-height: 50px;
+        }
+
+        .website-name {
+            margin-left: -1000px; /* Adjust the margin as needed */
+            color: #ffcc00; /* Set the text color */
+        }
+
+
+        .navigation {
+            list-style-type: none;
+            display: flex;
+            gap: 20px;
+            background-color: rgb(42, 39, 39);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .navigation li {
+            position: relative;
+        }
+
+        .navigation li a {
+            text-decoration: none;
+            color: rgb(46, 204, 113);
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navigation li:not(:last-child):after {
+            content: '|';
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            color: rgb(46, 204, 113);
+        }
+
+        .navigation li a:hover {
+            color: #ffcc00;
+        }
+
+        .split-screen {
+            display: flex;
+            flex: 1;
+        }
+
+        .main-section {
+            text-align: center;
+            padding: 125px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: rgb(46, 204, 113);
+        }
+
+        .sub-heading {
+            font-size: 1.5em;
+            color: #099ee9a5;
+            margin-bottom: 30px;
+        }
+
+        .start-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            text-decoration: none;
+            background-color: #ffcc00;
+            color: #333333;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .start-button:hover {
+            background-color: #83f068;
+        }
+
+        .features-section {
+            display: flex;
+            justify-content: space-around;
+            background-color: #1c161660;
+            padding: 50px;
+        }
+
+        .feature {
+            text-align: center;
+            color: rgba(168, 55, 249, 0.97);
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #dd1b7c;
+        }
+
+        /* Keyframes for the loading animation */
+
+        @keyframes spin3D {
+            from {
+                transform: rotate3d(.5, .5, .5, 360deg);
+            }
+
+            to {
+                transform: rotate3d(0deg);
+            }
+        }
+
+        /* Styling for the loading animation */
+
+        .spinner-box {
+            width: 100px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: transparent;
+        }
+
+        .leo {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        .blue-orbit {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #91daffa5;
+            -webkit-animation: spin3D 3s linear .2s infinite;
+        }
+
+        .green-orbit {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #91ffbfa5;
+            -webkit-animation: spin3D 2s linear 0s infinite;
+        }
+
+        .red-orbit {
+            width: 26px;
+            height: 26px;
+            border: 2px solid #f5a959a5;
+            -webkit-animation: spin3D 1s linear 0s infinite;
+        }
+
+        .white-orbit {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #d648d6a5;
+            -webkit-animation: spin3D 10s linear 0s infinite;
+        }
+
+        .w1 {
+            transform: rotate3D(1, 1, 1, 90deg);
+        }
+
+        .w2 {
+            transform: rotate3D(1, 2, .5, 90deg);
+        }
+
+        .w3 {
+            transform: rotate3D(.5, 1, 2, 90deg);
+        }
+
+        /* Additional styling for the login and register pages */
+        .side-section {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .login-container,
+        .register-container,
+        .image-container {
+            width: 90%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none; /* Initially hide login and register containers */
+        }
+
+        .login-container h2,
+        .register-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .login-container .form-group,
+        .register-container .form-group {
+            margin-bottom: 15px;
+        }
+
+        .login-container label,
+        .register-container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .login-container input,
+        .register-container input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .button-container {
+            text-align: center;
+        }
+
+        .button {
+            background-color: #ffcc00;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ffdb4d;
+        }
+
+        .login-container p,
+        .register-container p {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .login-container a,
+        .register-container a {
+            color: #ffcc00;
+        }
+
+        /* Responsive styles for smaller screens */
+        @media screen and (max-width: 768px) {
+            .split-screen {
+                flex-direction: column;
+            }
+
+            .main-section,
+            .side-section,
+            .login-container,
+            .register-container,
+            .image-container {
+                width: 100%;
+            }
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <!-- Dynamically generated logo using loading animation -->
+            <div class="spinner-box">
+                <div class="blue-orbit leo"></div>
+                <div class="green-orbit leo"></div>
+                <div class="red-orbit leo"></div>
+                <div class="white-orbit w1 leo"></div>
+                <div class="white-orbit w2 leo"></div>
+                <div class="white-orbit w3 leo"></div>
+            </div>
+        </div>
+        <div class="website-name">
+            <h2>ChatEdGe</h2>
+        </div>
+        <nav>
+            <ul class="navigation">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Contact</a></li>
+                <li><a href="#" onclick="showLogin()">Login</a></li>
+                <li><a href="#" onclick="showRegister()">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="split-screen">
+        <section class="main-section">
+            <h1>FEEL FREE TO USE OUR WEBSITE</h1>
+            <p class="sub-heading">Your brief description goes here.</p>
+            <a href="#" onclick="showLoginAndRegister()" class="start-button">Start</a>
+        </section>
+
+        <!-- Side Section -->
+        <section class="side-section">
+            <!-- Image Container (initially displayed) -->
+            <div class="image-container">
+                <img src="abstract-blue-painting.jpg" alt="Placeholder Image" style="max-width: 100%; border-radius: 5px;">
+            </div>
+
+            <!-- Login Container -->
+            <div class="login-container">
+                <h2>Login</h2>
+                <form action="{{ url_for('login') }}" method="post" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="button-container">
+                        <input type="submit" value="Login" class="button">
+                    </div>
+                </form>
+                <p>Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+            </div>
+
+            <!-- Register Container -->
+            <div class="register-container">
+                <h2>Register</h2>
+                <form action="{{ url_for('register') }}" method="post" class="register-form">
+                    <!-- Your existing register form content -->
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="college">College:</label>
+                    <input type="text" id="college" name="college" required>
+                    <label for="class">Class:</label>
+                    <input type="text" id="class" name="class" required>
+                    <label for="roll_no">Roll No:</label>
+                    <input type="text" id="roll_no" name="roll_no" required>
+                    <label for="blood_group">Blood Group:</label>
+                    <input type="text" id="blood_group" name="blood_group" required>
+                    <label for="phone_number">Phone Number:</label>
+                    <input type="tel" id="phone_number" name="phone_number" required>
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" name="address" required>
+                    <label for="date_of_birth">Date of Birth:</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" required>
+                    <label for="parent_details">Parent Details:</label>
+                    <input type="text" id="parent_details" name="parent_details" required>
+                    <button type="submit">Register</button>
+                </form>
+                <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+            </div>
+        </section>
+    </div>
+
+    <section class="features-section">
+        <div class="feature">
+            <h3>CHATBOT</h3>
+            <p>chatbot for FREE</p>
+        </div>
+        <div class="feature">
+            <h3>EDA</h3>
+            <p>Exploratory Data Analysis</p>
+        </div>
+        <div class="feature">
+            <h3>GPA</h3>
+            <p>Calculate your CGPA and SGPA</p>
+        </div>
+    </section>
+
+    <script>
+        let isLoginVisible = true;
+    
+        function showLoginAndRegister() {
+            const sideSection = document.querySelector('.side-section');
+            sideSection.style.display = 'flex';
+            // Hide the image container when login/register is displayed
+            document.querySelector('.image-container').style.display = 'none';
+            // Show the appropriate form based on the current state
+            if (isLoginVisible) {
+                showLogin();
+            } else {
+                showRegister();
+            }
+        }
+    
+        function showLogin() {
+            isLoginVisible = true;
+            // Hide the register container
+            document.querySelector('.register-container').style.display = 'none';
+            // Show the login container
+            document.querySelector('.login-container').style.display = 'block';
+        }
+    
+        function showRegister() {
+            isLoginVisible = false;
+            // Show the register container
+            document.querySelector('.register-container').style.display = 'block';
+            // Hide the login container
+            document.querySelector('.login-container').style.display = 'none';
+        }
+    </script>
+    
+    
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analysis Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .data {
+            margin-top: 20px;
+        }
+
+        .heatmap {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .boxplots {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .boxplot {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .pairplot {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Analysis Results</h1>
+
+        <h2>Basic Information</h2>
+        <div class="data">
+            {{ info_results | safe }}
+        </div>
+
+        <h2>Descriptive Statistics</h2>
+        <div class="data">
+            {{ describe_results | safe }}
+        </div>
+
+        <h2>Column Data Types</h2>
+        <div class="data">
+            {% for col, datatype in column_datatypes.items() %}
+                <p><strong>{{ col }}:</strong> {{ datatype }}</p>
+            {% endfor %}
+        </div>
+
+        <h2>Missing Values</h2>
+        <div class="data">
+            {{ missing_values_table | safe }}
+        </div>
+
+        <h2>Unique Values</h2>
+        <div class="data">
+            {% for col, values in unique_values.items() %}
+                <p><strong>{{ col }}:</strong> {{ values }}</p>
+            {% endfor %}
+        </div>
+
+        <h2>Correlation Heatmap</h2>
+        <div class="heatmap">
+            <img src="data:image/png;base64,{{ heatmap_image }}" alt="Correlation Heatmap">
+        </div>
+
+        <h2>Box Plots</h2>
+        <div class="boxplots">
+            {% for col, image in boxplot_images.items() %}
+                <div class="boxplot">
+                    <p><strong>{{ col }}</strong></p>
+                    <img src="data:image/png;base64,{{ image }}" alt="{{ col }} Box Plot">
+                </div>
+            {% endfor %}
+        </div>
+
+        <h2>Pair Plot</h2>
+        <div class="pairplot">
+            <img src="data:image/png;base64,{{ pairplot_image }}" alt="Pair Plot">
+        </div>
+    </div>
+</body>
+</html>
